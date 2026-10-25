@@ -2,7 +2,7 @@ FROM ros:jazzy
 
 ARG BUILD_TESTING=false
 ARG IGNORE_MAIN=false
-ARG USE_ASAN=false
+ARG USE_ASAN=true
 
 ADD . /app
 WORKDIR /app
