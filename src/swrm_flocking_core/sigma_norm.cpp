@@ -24,4 +24,9 @@ namespace swrm::flocking {
         hpscalar denominator = boost::math::rsqrt(1.0 + z_norm_sq);
         return denominator * z;
     }
+    
+    hpscalar bounded_sigmoidal(const hpscalar& z) {
+        hpscalar denominator = boost::math::rsqrt(1.0 + z * z);
+        return denominator * z;
+    }
 }
