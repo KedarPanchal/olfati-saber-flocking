@@ -15,6 +15,7 @@ FetchContent_MakeAvailable(googletest)
 add_executable(swrm_flocking_tests
     test_directed_pointer.cpp
     test_sigma_norm.cpp
+    test_smooth_bump_function.cpp
 )
 
 # Link library to test and GTest
