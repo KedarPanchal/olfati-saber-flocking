@@ -67,6 +67,7 @@ find_package(Eigen3 REQUIRED NO_MODULE)
 # All non-main files should be linked as an object library for tests
 add_library(swrm_flocking_core OBJECT
     src/swrm_flocking_core/sigma_norm.cpp
+    src/swrm_flocking_core/smooth_bump_function.cpp
 )
 
 # Main executable 
