@@ -57,6 +57,7 @@ unset(CMAKE_REQUIRED_LINK_OPTIONS)
 
 # -- BUILD ARGUMENT HANDLING --------------------------------------------------
 option(USE_ASAN "Enable Address Sanitizer" FALSE)
+option(USE_TSAN "Enable Thread Sanitizer" FALSE)
 
 # -- PROJECT DEPENDENCIES -----------------------------------------------------
 # TODO: Link to ROS2 libraries as needed
@@ -87,12 +88,17 @@ target_link_libraries(swrm_flocking PRIVATE
     swrm_flocking_core
 )
 
+# Validate TSAN and ASAN mutual exclusivity
+if (USE_ASAN AND USE_TSAN)
+    message(FATAL_ERROR "USE_ASAN and USE_TSAN cannot both be true.")
+endif()
+
 # Set ASAN for both the core library and the main executable
-# Set TSAN if ASAN isn't used because they are mutually exclusive
+# Set TSAN for both if ASAN isn't used because they are mutually exclusive
 if (ASAN_SUPPORTED AND USE_ASAN)
     target_compile_options(swrm_flocking_core PUBLIC ${ASAN_FLAG})
     target_link_options(swrm_flocking_core PUBLIC ${ASAN_FLAG})
-elseif (TSAN_SUPPORTED)
+elseif (TSAN_SUPPORTED AND USE_TSAN)
     target_compile_options(swrm_flocking_core PUBLIC ${TSAN_FLAG})
     target_link_options(swrm_flocking_core PUBLIC ${TSAN_FLAG})
 endif()
