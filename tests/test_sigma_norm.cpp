@@ -220,3 +220,42 @@ TEST(TestSigmaNorm, BoundedSigmoidalAtZero) {
         << " is incorrect for expected value "
         << expected_value;
 }
+
+TEST(TestSigmaNorm, BoundedSigmoidalScalar) {
+    swrm::flocking::hpscalar z = 2.0;
+    swrm::flocking::hpscalar expected_value = 2.0 / boost::multiprecision::sqrt(swrm::flocking::hpscalar(5.0));
+    swrm::flocking::hpscalar computed_value = swrm::flocking::bounded_sigmoidal(z);
+    swrm::flocking::hpscalar epsilon = 1e-6;
+    swrm::flocking::hpscalar margin = boost::multiprecision::abs(computed_value - expected_value);
+    EXPECT_TRUE(margin < epsilon)
+        << "Bounded sigmoidal function value "
+        << computed_value
+        << " is incorrect for expected value "
+        << expected_value;
+}
+
+TEST(TestSigmaNorm, BoundedSigmoidalScalarNegative) {
+    swrm::flocking::hpscalar z = -2.0;
+    swrm::flocking::hpscalar expected_value = -2.0 / boost::multiprecision::sqrt(swrm::flocking::hpscalar(5.0));
+    swrm::flocking::hpscalar computed_value = swrm::flocking::bounded_sigmoidal(z);
+    swrm::flocking::hpscalar epsilon = 1e-6;
+    swrm::flocking::hpscalar margin = boost::multiprecision::abs(computed_value - expected_value);
+    EXPECT_TRUE(margin < epsilon)
+        << "Bounded sigmoidal function value "
+        << computed_value
+        << " is incorrect for expected value "
+        << expected_value;
+}
+
+TEST(TestSigmaNorm, BoundedSigmoidalScalarAtZero) {
+    swrm::flocking::hpscalar z = 0.0;
+    swrm::flocking::hpscalar expected_value = 0.0;
+    swrm::flocking::hpscalar computed_value = swrm::flocking::bounded_sigmoidal(z);
+    swrm::flocking::hpscalar epsilon = 1e-6;
+    swrm::flocking::hpscalar margin = boost::multiprecision::abs(computed_value - expected_value);
+    EXPECT_TRUE(margin < epsilon)
+        << "Bounded sigmoidal function value "
+        << computed_value
+        << " is incorrect for expected value "
+        << expected_value;
+}
