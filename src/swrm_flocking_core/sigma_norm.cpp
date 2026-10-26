@@ -7,6 +7,11 @@
 #include "swrm_flocking_core/parameters.hpp"
 
 namespace swrm::flocking {
+    hpscalar sigma_norm(const hpscalar& z) {
+        hpscalar radical = boost::multiprecision::sqrt(1.0 + SIGMA_NORM_SMOOTHNESS * z * z);
+        return (1.0 / SIGMA_NORM_SMOOTHNESS) * (radical - 1.0);
+    }
+
     hpscalar sigma_norm(const vector2d& z) {
         hpscalar z_norm_sq = z.squaredNorm();
         hpscalar radical = boost::multiprecision::sqrt(1.0 + SIGMA_NORM_SMOOTHNESS * z_norm_sq);
