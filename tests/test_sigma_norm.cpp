@@ -8,6 +8,56 @@
 #include <boost/multiprecision/cpp_bin_float.hpp>
 #include <boost/math/special_functions/rsqrt.hpp>
 
+TEST(TestSigmaNorm, SigmaNormScalarValue) {
+    swrm::flocking::hpscalar z = 10.0;
+
+    swrm::flocking::hpscalar expected_value = 10 * boost::multiprecision::sqrt(swrm::flocking::hpscalar(11.0)) - 10;
+    swrm::flocking::hpscalar computed_value = swrm::flocking::sigma_norm(z);
+
+    swrm::flocking::hpscalar epsilon = 1e-6;
+    swrm::flocking::hpscalar margin = boost::multiprecision::abs(computed_value - expected_value);
+
+    EXPECT_TRUE(margin < epsilon) 
+        << "Sigma norm value " 
+        << std::setprecision(10) 
+        << computed_value
+        << " is incorrect from expected value "
+        << std::setprecision(10)
+        << expected_value;
+}
+
+TEST(TestSigmaNorm, SigmaNormScalarNegativeValue) {
+    swrm::flocking::hpscalar z = -10.0;
+
+    swrm::flocking::hpscalar expected_value = 10 * boost::multiprecision::sqrt(swrm::flocking::hpscalar(11.0)) - 10;
+    swrm::flocking::hpscalar computed_value = swrm::flocking::sigma_norm(z);
+
+    swrm::flocking::hpscalar epsilon = 1e-6;
+    swrm::flocking::hpscalar margin = boost::multiprecision::abs(computed_value - expected_value);
+
+    EXPECT_TRUE(margin < epsilon) 
+        << "Sigma norm value " 
+        << computed_value
+        << " is incorrect for expected value "
+        << expected_value;
+}
+
+TEST(TestSigmaNorm, SigmaNormScalarAtZero) {
+    swrm::flocking::hpscalar z = 0.0;
+
+    swrm::flocking::hpscalar expected_value = 0.0;
+    swrm::flocking::hpscalar computed_value = swrm::flocking::sigma_norm(z);
+
+    swrm::flocking::hpscalar epsilon = 1e-6;
+    swrm::flocking::hpscalar margin = boost::multiprecision::abs(computed_value - expected_value);
+
+    EXPECT_TRUE(margin < epsilon) 
+        << "Sigma norm value " 
+        << computed_value
+        << " is incorrect for expected value "
+        << expected_value;
+}
+
 TEST(TestSigmaNorm, SigmaNormValue) {
     swrm::flocking::vector2d z(6.0, 8.0);
 
